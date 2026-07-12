@@ -30,3 +30,17 @@ export async function toggleSocioActivo(id: string, activo: boolean) {
   if (error) throw new Error(error.message);
   revalidatePath("/socios");
 }
+
+export async function eliminarSocio(id: string) {
+  const supabase = await createClient();
+  const { error } = await supabase.from("socios").delete().eq("id", id);
+  if (error) {
+    if (error.code === "23503") {
+      throw new Error(
+        "No se puede eliminar: tiene créditos o préstamos asociados. Desactívalo en su lugar."
+      );
+    }
+    throw new Error(error.message);
+  }
+  revalidatePath("/socios");
+}

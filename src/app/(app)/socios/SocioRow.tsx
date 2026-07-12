@@ -2,11 +2,12 @@
 
 import { useState, useTransition } from "react";
 import type { Socio } from "@/lib/types";
-import { renombrarSocio, toggleSocioActivo } from "./actions";
+import { eliminarSocio, renombrarSocio, toggleSocioActivo } from "./actions";
 
 export function SocioRow({ socio }: { socio: Socio }) {
   const [nombre, setNombre] = useState(socio.nombre);
   const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState<string | null>(null);
 
   return (
     <tr className="border-b border-slate-100">
@@ -19,8 +20,9 @@ export function SocioRow({ socio }: { socio: Socio }) {
               startTransition(() => renombrarSocio(socio.id, nombre));
             }
           }}
-          className="w-full rounded-md border border-transparent px-2 py-1 text-sm hover:border-slate-200 focus:border-slate-400 focus:outline-none"
+          className="w-full rounded-md border border-slate-300 px-2 py-1 text-sm focus:border-slate-500 focus:outline-none"
         />
+        {error && <p className="mt-1 text-xs text-red-600">{error}</p>}
       </td>
       <td className="py-2 pr-4">
         <span
@@ -35,9 +37,28 @@ export function SocioRow({ socio }: { socio: Socio }) {
         <button
           disabled={isPending}
           onClick={() => startTransition(() => toggleSocioActivo(socio.id, !socio.activo))}
-          className="text-sm text-slate-500 hover:text-slate-900 disabled:opacity-50"
+          className="mr-3 text-sm text-slate-500 hover:text-slate-900 disabled:opacity-50"
         >
           {socio.activo ? "Desactivar" : "Activar"}
+        </button>
+        <button
+          disabled={isPending}
+          onClick={() => {
+            if (!confirm(`¿Eliminar "${socio.nombre}"? Esta acción no se puede deshacer.`)) {
+              return;
+            }
+            setError(null);
+            startTransition(async () => {
+              try {
+                await eliminarSocio(socio.id);
+              } catch (e) {
+                setError(e instanceof Error ? e.message : "No se pudo eliminar.");
+              }
+            });
+          }}
+          className="text-sm text-slate-400 hover:text-red-600 disabled:opacity-50"
+        >
+          Eliminar
         </button>
       </td>
     </tr>

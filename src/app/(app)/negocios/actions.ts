@@ -30,3 +30,17 @@ export async function toggleNegocioActivo(id: string, activo: boolean) {
   if (error) throw new Error(error.message);
   revalidatePath("/negocios");
 }
+
+export async function eliminarNegocio(id: string) {
+  const supabase = await createClient();
+  const { error } = await supabase.from("negocios").delete().eq("id", id);
+  if (error) {
+    if (error.code === "23503") {
+      throw new Error(
+        "No se puede eliminar: tiene ingresos asociados. Desactívalo en su lugar."
+      );
+    }
+    throw new Error(error.message);
+  }
+  revalidatePath("/negocios");
+}
