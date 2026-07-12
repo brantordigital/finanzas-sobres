@@ -13,6 +13,7 @@ const links = [
   { href: "/creditos", label: "Créditos" },
   { href: "/prestamos", label: "Préstamos" },
   { href: "/configuracion", label: "Config." },
+  { href: "/cuenta", label: "Cuenta" },
 ];
 
 export function Nav() {
