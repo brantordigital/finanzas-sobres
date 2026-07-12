@@ -33,5 +33,8 @@ export async function actualizarDistribucion(
   }
 
   revalidatePath("/configuracion");
+  revalidatePath("/ingresos");
+  revalidatePath("/gastos");
+  revalidatePath("/dashboard");
   return { error: null, success: true };
 }
