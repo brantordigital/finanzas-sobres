@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import type { Distribucion, Negocio } from "@/lib/types";
 import { formatEUR } from "@/lib/format";
 import { crearIngreso } from "./actions";
@@ -12,13 +13,25 @@ export function IngresoForm({
   negocios: Negocio[];
   distribucion: Distribucion[];
 }) {
-  const [importe, setImporte] = useState<number>(0);
+  const [importeInput, setImporteInput] = useState("");
+  const importe = parseFloat(importeInput.replace(",", ".")) || 0;
+
+  if (negocios.length === 0) {
+    return (
+      <div className="rounded-lg border border-slate-200 bg-white p-4 text-sm text-slate-600">
+        Antes de registrar un ingreso necesitas dar de alta al menos un negocio.{" "}
+        <Link href="/negocios" className="font-medium text-slate-900 underline">
+          Crear negocio
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <form
       action={async (formData) => {
         await crearIngreso(formData);
-        setImporte(0);
+        setImporteInput("");
       }}
       className="flex flex-col gap-4 rounded-lg border border-slate-200 bg-white p-4"
     >
@@ -59,15 +72,19 @@ export function IngresoForm({
         <label htmlFor="importe" className="block text-sm font-medium text-slate-700">
           Importe
         </label>
+        <input type="hidden" name="importe" value={importe} />
         <input
           id="importe"
-          name="importe"
-          type="number"
-          step="0.01"
-          min={0.01}
+          type="text"
+          inputMode="decimal"
           required
-          value={importe || ""}
-          onChange={(e) => setImporte(Number(e.target.value))}
+          value={importeInput}
+          onChange={(e) => {
+            const value = e.target.value;
+            if (/^\d*[.,]?\d*$/.test(value)) {
+              setImporteInput(value);
+            }
+          }}
           className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-slate-500 focus:outline-none"
         />
       </div>
