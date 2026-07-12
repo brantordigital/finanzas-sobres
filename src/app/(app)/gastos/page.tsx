@@ -19,7 +19,7 @@ export default async function GastosPage() {
 
       <div className="flex flex-col gap-2 rounded-lg border border-slate-200 bg-white p-4">
         {gastos?.map((gasto) => (
-          <GastoRow key={gasto.id} gasto={gasto} />
+          <GastoRow key={gasto.id} gasto={gasto} distribucion={distribucion ?? []} />
         ))}
         {!gastos?.length && (
           <p className="py-4 text-center text-sm text-slate-400">Sin gastos todavía.</p>

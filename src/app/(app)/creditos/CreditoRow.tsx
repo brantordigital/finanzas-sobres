@@ -1,13 +1,143 @@
 "use client";
 
-import { useTransition } from "react";
-import type { CreditoSocio } from "@/lib/types";
+import { useState, useTransition } from "react";
+import type { CreditoSocio, Socio } from "@/lib/types";
 import { formatEUR, formatDate } from "@/lib/format";
-import { eliminarCredito, marcarCreditoSolucionado } from "./actions";
+import { actualizarCredito, eliminarCredito, marcarCreditoSolucionado } from "./actions";
 
-export function CreditoRow({ credito }: { credito: CreditoSocio }) {
+export function CreditoRow({
+  credito,
+  socios,
+}: {
+  credito: CreditoSocio;
+  socios: Socio[];
+}) {
   const [isPending, startTransition] = useTransition();
+  const [editing, setEditing] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const saldo = credito.ingreso - credito.egreso;
+
+  if (editing) {
+    return (
+      <form
+        action={(formData) => {
+          setError(null);
+          startTransition(async () => {
+            try {
+              await actualizarCredito(credito.id, formData);
+              setEditing(false);
+            } catch (e) {
+              setError(e instanceof Error ? e.message : "No se pudo guardar.");
+            }
+          });
+        }}
+        className="flex flex-col gap-3 rounded-md border border-slate-300 bg-slate-50 px-3 py-3 text-sm"
+      >
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+          <div>
+            <label className="block text-xs font-medium text-slate-500">Fecha</label>
+            <input
+              name="fecha"
+              type="date"
+              required
+              defaultValue={credito.fecha}
+              className="mt-1 w-full rounded-md border border-slate-300 px-2 py-1.5 text-sm focus:border-slate-500 focus:outline-none"
+            />
+          </div>
+          <div>
+            <label className="block text-xs font-medium text-slate-500">De</label>
+            <select
+              name="de_socio_id"
+              required
+              defaultValue={credito.de_socio_id}
+              className="mt-1 w-full rounded-md border border-slate-300 px-2 py-1.5 text-sm focus:border-slate-500 focus:outline-none"
+            >
+              {socios.map((s) => (
+                <option key={s.id} value={s.id}>
+                  {s.nombre}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label className="block text-xs font-medium text-slate-500">Para</label>
+            <select
+              name="para_socio_id"
+              required
+              defaultValue={credito.para_socio_id}
+              className="mt-1 w-full rounded-md border border-slate-300 px-2 py-1.5 text-sm focus:border-slate-500 focus:outline-none"
+            >
+              {socios.map((s) => (
+                <option key={s.id} value={s.id}>
+                  {s.nombre}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <div>
+            <label className="block text-xs font-medium text-slate-500">Ingreso</label>
+            <input
+              name="ingreso"
+              type="number"
+              step="0.01"
+              min={0}
+              defaultValue={credito.ingreso}
+              className="mt-1 w-full rounded-md border border-slate-300 px-2 py-1.5 text-sm focus:border-slate-500 focus:outline-none"
+            />
+          </div>
+          <div>
+            <label className="block text-xs font-medium text-slate-500">Egreso</label>
+            <input
+              name="egreso"
+              type="number"
+              step="0.01"
+              min={0}
+              defaultValue={credito.egreso}
+              className="mt-1 w-full rounded-md border border-slate-300 px-2 py-1.5 text-sm focus:border-slate-500 focus:outline-none"
+            />
+          </div>
+        </div>
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <div>
+            <label className="block text-xs font-medium text-slate-500">Fecha solucionado</label>
+            <input
+              name="fecha_solucionado"
+              type="date"
+              defaultValue={credito.fecha_solucionado ?? ""}
+              className="mt-1 w-full rounded-md border border-slate-300 px-2 py-1.5 text-sm focus:border-slate-500 focus:outline-none"
+            />
+          </div>
+          <div>
+            <label className="block text-xs font-medium text-slate-500">Observaciones</label>
+            <input
+              name="observaciones"
+              defaultValue={credito.observaciones ?? ""}
+              className="mt-1 w-full rounded-md border border-slate-300 px-2 py-1.5 text-sm focus:border-slate-500 focus:outline-none"
+            />
+          </div>
+        </div>
+        {error && <p className="text-xs text-red-600">{error}</p>}
+        <div className="flex gap-2">
+          <button
+            type="submit"
+            disabled={isPending}
+            className="rounded-md bg-slate-900 px-3 py-1.5 text-xs font-medium text-white hover:bg-slate-800 disabled:opacity-50"
+          >
+            Guardar
+          </button>
+          <button
+            type="button"
+            onClick={() => setEditing(false)}
+            className="rounded-md px-3 py-1.5 text-xs text-slate-500 hover:bg-slate-100"
+          >
+            Cancelar
+          </button>
+        </div>
+      </form>
+    );
+  }
 
   return (
     <div className="flex flex-wrap items-center gap-x-4 gap-y-1 rounded-md border border-slate-100 px-3 py-2 text-sm">
@@ -40,6 +170,14 @@ export function CreditoRow({ credito }: { credito: CreditoSocio }) {
         }`}
       >
         {credito.fecha_solucionado ? "Solucionado" : "Pendiente"}
+      </button>
+      <button
+        type="button"
+        disabled={isPending}
+        onClick={() => setEditing(true)}
+        className="shrink-0 text-slate-400 hover:text-slate-900 disabled:opacity-50"
+      >
+        Editar
       </button>
       <button
         type="button"

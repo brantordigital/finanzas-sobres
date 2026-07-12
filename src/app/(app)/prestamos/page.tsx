@@ -12,18 +12,20 @@ export default async function PrestamosPage() {
       .select("*, socios(id, nombre)")
       .order("fecha", { ascending: false })
       .returns<PrestamoSocio[]>(),
-    supabase.from("socios").select("*").eq("activo", true).order("nombre").returns<Socio[]>(),
+    supabase.from("socios").select("*").order("nombre").returns<Socio[]>(),
   ]);
+
+  const sociosActivos = (socios ?? []).filter((s) => s.activo);
 
   return (
     <div className="flex flex-col gap-6">
       <h1 className="text-lg font-semibold text-slate-900">Préstamos a Socios</h1>
 
-      <PrestamoForm socios={socios ?? []} />
+      <PrestamoForm socios={sociosActivos} />
 
       <div className="flex flex-col gap-2 rounded-lg border border-slate-200 bg-white p-4">
         {prestamos?.map((prestamo) => (
-          <PrestamoRow key={prestamo.id} prestamo={prestamo} />
+          <PrestamoRow key={prestamo.id} prestamo={prestamo} socios={socios ?? []} />
         ))}
         {!prestamos?.length && (
           <p className="py-4 text-center text-sm text-slate-400">Sin préstamos todavía.</p>

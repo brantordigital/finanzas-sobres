@@ -34,6 +34,24 @@ export async function crearIngreso(formData: FormData) {
   revalidatePath("/dashboard");
 }
 
+export async function actualizarIngreso(id: string, formData: FormData) {
+  const parsed = ingresoSchema.parse({
+    fecha: formData.get("fecha"),
+    negocio_id: formData.get("negocio_id"),
+    importe: formData.get("importe"),
+    observaciones: formData.get("observaciones") || undefined,
+  });
+
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("ingresos")
+    .update({ ...parsed, observaciones: parsed.observaciones ?? null })
+    .eq("id", id);
+  if (error) throw new Error(error.message);
+  revalidatePath("/ingresos");
+  revalidatePath("/dashboard");
+}
+
 export async function eliminarIngreso(id: string) {
   const supabase = await createClient();
   const { error } = await supabase.from("ingresos").delete().eq("id", id);

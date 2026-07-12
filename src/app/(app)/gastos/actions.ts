@@ -37,6 +37,25 @@ export async function crearGasto(formData: FormData) {
   revalidatePath("/dashboard");
 }
 
+export async function actualizarGasto(id: string, formData: FormData) {
+  const parsed = gastoSchema.parse({
+    fecha: formData.get("fecha"),
+    categoria: formData.get("categoria"),
+    importe: formData.get("importe"),
+    observacion: formData.get("observacion") || undefined,
+    debo: formData.get("debo") === "on",
+  });
+
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("gastos")
+    .update({ ...parsed, observacion: parsed.observacion ?? null, debo: parsed.debo ?? false })
+    .eq("id", id);
+  if (error) throw new Error(error.message);
+  revalidatePath("/gastos");
+  revalidatePath("/dashboard");
+}
+
 export async function eliminarGasto(id: string) {
   const supabase = await createClient();
   const { error } = await supabase.from("gastos").delete().eq("id", id);

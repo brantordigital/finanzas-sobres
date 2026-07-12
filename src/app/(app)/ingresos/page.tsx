@@ -12,19 +12,26 @@ export default async function IngresosPage() {
       .select("*, negocios(id, nombre)")
       .order("fecha", { ascending: false })
       .returns<Ingreso[]>(),
-    supabase.from("negocios").select("*").eq("activo", true).order("nombre").returns<Negocio[]>(),
+    supabase.from("negocios").select("*").order("nombre").returns<Negocio[]>(),
     supabase.from("distribucion").select("*").order("orden").returns<Distribucion[]>(),
   ]);
+
+  const negociosActivos = (negocios ?? []).filter((n) => n.activo);
 
   return (
     <div className="flex flex-col gap-6">
       <h1 className="text-lg font-semibold text-slate-900">Ingresos</h1>
 
-      <IngresoForm negocios={negocios ?? []} distribucion={distribucion ?? []} />
+      <IngresoForm negocios={negociosActivos} distribucion={distribucion ?? []} />
 
       <div className="flex flex-col gap-2 rounded-lg border border-slate-200 bg-white p-4">
         {ingresos?.map((ingreso) => (
-          <IngresoRow key={ingreso.id} ingreso={ingreso} distribucion={distribucion ?? []} />
+          <IngresoRow
+            key={ingreso.id}
+            ingreso={ingreso}
+            distribucion={distribucion ?? []}
+            negocios={negocios ?? []}
+          />
         ))}
         {!ingresos?.length && (
           <p className="py-4 text-center text-sm text-slate-400">Sin ingresos todavía.</p>

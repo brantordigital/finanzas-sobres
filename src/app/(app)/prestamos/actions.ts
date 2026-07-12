@@ -36,6 +36,25 @@ export async function crearPrestamo(formData: FormData) {
   revalidatePath("/dashboard");
 }
 
+export async function actualizarPrestamo(id: string, formData: FormData) {
+  const parsed = prestamoSchema.parse({
+    fecha: formData.get("fecha"),
+    socio_id: formData.get("socio_id"),
+    egreso: formData.get("egreso") || 0,
+    ingreso: formData.get("ingreso") || 0,
+    observaciones: formData.get("observaciones") || undefined,
+  });
+
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("prestamos_socios")
+    .update({ ...parsed, observaciones: parsed.observaciones ?? null })
+    .eq("id", id);
+  if (error) throw new Error(error.message);
+  revalidatePath("/prestamos");
+  revalidatePath("/dashboard");
+}
+
 export async function eliminarPrestamo(id: string) {
   const supabase = await createClient();
   const { error } = await supabase.from("prestamos_socios").delete().eq("id", id);

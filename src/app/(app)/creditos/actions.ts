@@ -46,6 +46,31 @@ export async function crearCredito(formData: FormData) {
   revalidatePath("/dashboard");
 }
 
+export async function actualizarCredito(id: string, formData: FormData) {
+  const parsed = creditoSchema.parse({
+    fecha: formData.get("fecha"),
+    de_socio_id: formData.get("de_socio_id"),
+    para_socio_id: formData.get("para_socio_id"),
+    ingreso: formData.get("ingreso") || 0,
+    egreso: formData.get("egreso") || 0,
+    fecha_solucionado: formData.get("fecha_solucionado") || undefined,
+    observaciones: formData.get("observaciones") || undefined,
+  });
+
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("creditos_socios")
+    .update({
+      ...parsed,
+      fecha_solucionado: parsed.fecha_solucionado || null,
+      observaciones: parsed.observaciones ?? null,
+    })
+    .eq("id", id);
+  if (error) throw new Error(error.message);
+  revalidatePath("/creditos");
+  revalidatePath("/dashboard");
+}
+
 export async function eliminarCredito(id: string) {
   const supabase = await createClient();
   const { error } = await supabase.from("creditos_socios").delete().eq("id", id);
