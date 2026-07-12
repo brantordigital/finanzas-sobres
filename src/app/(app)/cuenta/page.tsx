@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { CambiarPasswordForm } from "./CambiarPasswordForm";
+import { InvitarSocioForm } from "./InvitarSocioForm";
 
 export default async function CuentaPage() {
   const supabase = await createClient();
@@ -14,6 +15,7 @@ export default async function CuentaPage() {
         <p className="text-sm text-slate-500">{user?.email}</p>
       </div>
       <CambiarPasswordForm />
+      <InvitarSocioForm />
     </div>
   );
 }
