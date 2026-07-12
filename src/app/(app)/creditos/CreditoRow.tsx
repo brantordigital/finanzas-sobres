@@ -12,7 +12,7 @@ export function CreditoRow({ credito }: { credito: CreditoSocio }) {
   return (
     <div className="flex flex-wrap items-center gap-x-4 gap-y-1 rounded-md border border-slate-100 px-3 py-2 text-sm">
       <span className="shrink-0 text-slate-500">{formatDate(credito.fecha)}</span>
-      <span className="flex-1 truncate text-slate-700">
+      <span className="w-full truncate text-slate-700 sm:w-auto sm:flex-1">
         {credito.de_socio?.nombre} → {credito.para_socio?.nombre}
       </span>
       <span className="shrink-0 text-right text-green-700">

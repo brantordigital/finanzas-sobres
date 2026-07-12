@@ -9,7 +9,7 @@ export function CreditoForm({ socios }: { socios: Socio[] }) {
       action={crearCredito}
       className="flex flex-col gap-4 rounded-lg border border-slate-200 bg-white p-4"
     >
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <div>
           <label htmlFor="fecha" className="block text-sm font-medium text-slate-700">
             Fecha
@@ -59,7 +59,7 @@ export function CreditoForm({ socios }: { socios: Socio[] }) {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div>
           <label htmlFor="ingreso" className="block text-sm font-medium text-slate-700">
             Ingreso
@@ -90,7 +90,7 @@ export function CreditoForm({ socios }: { socios: Socio[] }) {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div>
           <label htmlFor="fecha_solucionado" className="block text-sm font-medium text-slate-700">
             Fecha solucionado

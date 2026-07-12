@@ -9,7 +9,7 @@ export function GastoForm({ distribucion }: { distribucion: Distribucion[] }) {
       action={crearGasto}
       className="flex flex-col gap-4 rounded-lg border border-slate-200 bg-white p-4"
     >
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div>
           <label htmlFor="fecha" className="block text-sm font-medium text-slate-700">
             Fecha

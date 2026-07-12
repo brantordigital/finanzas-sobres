@@ -18,7 +18,7 @@ export function IngresoRow({
     <details className="group rounded-md border border-slate-100 open:bg-slate-50">
       <summary className="flex cursor-pointer list-none flex-wrap items-center gap-x-4 gap-y-1 px-3 py-2 text-sm">
         <span className="shrink-0 text-slate-500">{formatDate(ingreso.fecha)}</span>
-        <span className="flex-1 truncate text-slate-700">{ingreso.negocios?.nombre}</span>
+        <span className="w-full truncate text-slate-700 sm:w-auto sm:flex-1">{ingreso.negocios?.nombre}</span>
         <span className="w-full shrink-0 truncate text-slate-500 sm:w-28">{ingreso.observaciones}</span>
         <span className="shrink-0 text-right font-medium text-slate-900">
           {formatEUR(ingreso.importe)}
