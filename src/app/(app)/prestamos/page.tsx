@@ -2,7 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import type { PrestamoSocio, Socio } from "@/lib/types";
 import { monthRange } from "@/lib/format";
 import { MonthFilter } from "@/components/MonthFilter";
-import { PrestamoForm } from "./PrestamoForm";
+import { PrestamoFormToggle } from "./PrestamoFormToggle";
 import { PrestamoRow } from "./PrestamoRow";
 
 export default async function PrestamosPage({
@@ -31,13 +31,14 @@ export default async function PrestamosPage({
 
   return (
     <div className="flex flex-col gap-6">
-      <h1 className="text-lg font-semibold text-gray-800">Préstamos a Socios</h1>
-
-      <PrestamoForm socios={sociosActivos} />
+      <div className="flex items-center justify-between">
+        <h1 className="text-lg font-semibold text-gray-800">Préstamos a Socios</h1>
+        <PrestamoFormToggle socios={sociosActivos} />
+      </div>
 
       <MonthFilter mes={mes} />
 
-      <div className="flex flex-col gap-2 rounded-lg border border-gray-200 bg-white p-4">
+      <div className="flex flex-col rounded-lg border border-gray-200 bg-white">
         {prestamos?.map((prestamo) => (
           <PrestamoRow key={prestamo.id} prestamo={prestamo} socios={socios ?? []} />
         ))}

@@ -2,7 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import type { CreditoSocio, Socio } from "@/lib/types";
 import { monthRange } from "@/lib/format";
 import { MonthFilter } from "@/components/MonthFilter";
-import { CreditoForm } from "./CreditoForm";
+import { CreditoFormToggle } from "./CreditoFormToggle";
 import { CreditoRow } from "./CreditoRow";
 
 export default async function CreditosPage({
@@ -31,13 +31,14 @@ export default async function CreditosPage({
 
   return (
     <div className="flex flex-col gap-6">
-      <h1 className="text-lg font-semibold text-gray-800">Créditos de Socios</h1>
-
-      <CreditoForm socios={sociosActivos} />
+      <div className="flex items-center justify-between">
+        <h1 className="text-lg font-semibold text-gray-800">Créditos de Socios</h1>
+        <CreditoFormToggle socios={sociosActivos} />
+      </div>
 
       <MonthFilter mes={mes} />
 
-      <div className="flex flex-col gap-2 rounded-lg border border-gray-200 bg-white p-4">
+      <div className="flex flex-col rounded-lg border border-gray-200 bg-white">
         {creditos?.map((credito) => (
           <CreditoRow key={credito.id} credito={credito} socios={socios ?? []} />
         ))}
