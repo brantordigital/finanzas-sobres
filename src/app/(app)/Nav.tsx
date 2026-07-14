@@ -51,9 +51,9 @@ export function Nav() {
   const [open, setOpen] = useState(false);
 
   return (
-    <nav className="border-b border-slate-200 bg-white">
+    <nav className="border-b border-gray-200 bg-white">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
-        <span className="text-sm font-semibold text-slate-900">Finanzas</span>
+        <span className="text-sm font-semibold text-gray-800">Finanzas</span>
 
         <div className="hidden flex-1 flex-wrap items-center gap-1 text-sm sm:flex">
           {links.map((link) => {
@@ -63,7 +63,7 @@ export function Nav() {
                 key={link.href}
                 href={link.href}
                 className={`whitespace-nowrap rounded-md px-3 py-1.5 ${
-                  active ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-slate-100"
+                  active ? "bg-emerald-600 text-white" : "text-gray-600 hover:bg-gray-100"
                 }`}
               >
                 {link.label}
@@ -71,7 +71,7 @@ export function Nav() {
             );
           })}
 
-          <span className="mx-2 h-5 w-px bg-slate-200" aria-hidden="true" />
+          <span className="mx-2 h-5 w-px bg-gray-200" aria-hidden="true" />
 
           {settingsLinks.map((link) => {
             const active = pathname.startsWith(link.href);
@@ -81,8 +81,8 @@ export function Nav() {
                 href={link.href}
                 className={`flex items-center gap-1.5 whitespace-nowrap rounded-md px-3 py-1.5 ${
                   active
-                    ? "bg-slate-200 text-slate-900"
-                    : "text-slate-400 hover:bg-slate-100 hover:text-slate-600"
+                    ? "bg-gray-200 text-gray-800"
+                    : "text-gray-400 hover:bg-gray-100 hover:text-gray-600"
                 }`}
               >
                 <link.icon />
@@ -96,7 +96,7 @@ export function Nav() {
           <form action={signOut}>
             <button
               type="submit"
-              className="whitespace-nowrap rounded-md px-3 py-1.5 text-sm text-slate-500 hover:bg-slate-100"
+              className="whitespace-nowrap rounded-md px-3 py-1.5 text-sm text-gray-400 hover:text-gray-600 hover:bg-gray-100"
             >
               Salir
             </button>
@@ -108,7 +108,7 @@ export function Nav() {
           onClick={() => setOpen((v) => !v)}
           aria-label="Abrir menú"
           aria-expanded={open}
-          className="flex h-9 w-9 items-center justify-center rounded-md text-slate-600 hover:bg-slate-100 sm:hidden"
+          className="flex h-9 w-9 items-center justify-center rounded-md text-gray-600 hover:bg-gray-100 sm:hidden"
         >
           {open ? (
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="h-5 w-5">
@@ -123,7 +123,7 @@ export function Nav() {
       </div>
 
       {open && (
-        <div className="flex flex-col gap-1 border-t border-slate-200 px-4 py-3 text-sm sm:hidden">
+        <div className="flex flex-col gap-1 border-t border-gray-200 px-4 py-3 text-sm sm:hidden">
           {links.map((link) => {
             const active = pathname.startsWith(link.href);
             return (
@@ -132,7 +132,7 @@ export function Nav() {
                 href={link.href}
                 onClick={() => setOpen(false)}
                 className={`rounded-md px-3 py-2 ${
-                  active ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-slate-100"
+                  active ? "bg-emerald-600 text-white" : "text-gray-600 hover:bg-gray-100"
                 }`}
               >
                 {link.label}
@@ -140,7 +140,7 @@ export function Nav() {
             );
           })}
 
-          <hr className="my-1 border-slate-200" />
+          <hr className="my-1 border-gray-200" />
 
           {settingsLinks.map((link) => {
             const active = pathname.startsWith(link.href);
@@ -150,7 +150,7 @@ export function Nav() {
                 href={link.href}
                 onClick={() => setOpen(false)}
                 className={`flex items-center gap-1.5 rounded-md px-3 py-2 ${
-                  active ? "bg-slate-200 text-slate-900" : "text-slate-400 hover:bg-slate-100"
+                  active ? "bg-gray-200 text-gray-800" : "text-gray-400 hover:bg-gray-100"
                 }`}
               >
                 <link.icon />
@@ -162,7 +162,7 @@ export function Nav() {
           <form action={signOut}>
             <button
               type="submit"
-              className="w-full rounded-md px-3 py-2 text-left text-slate-500 hover:bg-slate-100"
+              className="w-full rounded-md px-3 py-2 text-left text-gray-400 hover:text-gray-600 hover:bg-gray-100"
             >
               Salir
             </button>

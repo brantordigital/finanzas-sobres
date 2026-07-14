@@ -10,7 +10,7 @@ export function SocioRow({ socio }: { socio: Socio }) {
   const [error, setError] = useState<string | null>(null);
 
   return (
-    <tr className="border-b border-slate-100">
+    <tr className="border-b border-gray-100">
       <td className="py-2 pr-4">
         <input
           value={nombre}
@@ -20,14 +20,14 @@ export function SocioRow({ socio }: { socio: Socio }) {
               startTransition(() => renombrarSocio(socio.id, nombre));
             }
           }}
-          className="w-full rounded-md border border-slate-300 px-2 py-1 text-sm focus:border-slate-500 focus:outline-none"
+          className="w-full rounded-md border border-gray-300 px-2 py-1 text-sm focus:border-gray-500 focus:outline-none"
         />
         {error && <p className="mt-1 text-xs text-red-600">{error}</p>}
       </td>
       <td className="py-2 pr-4">
         <span
           className={`rounded-full px-2 py-0.5 text-xs font-medium ${
-            socio.activo ? "bg-green-100 text-green-700" : "bg-slate-100 text-slate-500"
+            socio.activo ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-500"
           }`}
         >
           {socio.activo ? "Activo" : "Inactivo"}
@@ -37,7 +37,7 @@ export function SocioRow({ socio }: { socio: Socio }) {
         <button
           disabled={isPending}
           onClick={() => startTransition(() => toggleSocioActivo(socio.id, !socio.activo))}
-          className="mr-3 text-sm text-slate-500 hover:text-slate-900 disabled:opacity-50"
+          className="mr-3 text-sm text-gray-500 hover:text-gray-800 disabled:opacity-50"
         >
           {socio.activo ? "Desactivar" : "Activar"}
         </button>
@@ -56,7 +56,7 @@ export function SocioRow({ socio }: { socio: Socio }) {
               }
             });
           }}
-          className="text-sm text-slate-400 hover:text-red-600 disabled:opacity-50"
+          className="text-sm text-gray-400 hover:text-red-600 disabled:opacity-50"
         >
           Eliminar
         </button>

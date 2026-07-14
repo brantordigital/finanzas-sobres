@@ -11,14 +11,14 @@ export function KpiCard({
 }) {
   const toneClass =
     tone === "positive"
-      ? "text-green-700"
+      ? "text-emerald-600"
       : tone === "negative"
-        ? "text-red-600"
-        : "text-slate-900";
+        ? "text-rose-600"
+        : "text-gray-800";
 
   return (
-    <div className="rounded-lg border border-slate-200 bg-white p-4">
-      <p className="text-xs uppercase text-slate-400">{label}</p>
+    <div className="rounded-lg border border-gray-200 bg-white p-4">
+      <p className="text-xs uppercase text-gray-500">{label}</p>
       <p className={`mt-1 text-2xl font-semibold ${toneClass}`}>{formatEUR(value)}</p>
     </div>
   );

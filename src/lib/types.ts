@@ -25,6 +25,7 @@ export type Ingreso = {
   fecha: string;
   negocio_id: string;
   importe: number;
+  concepto: string | null;
   observaciones: string | null;
   created_by: string | null;
   created_at: string;
@@ -36,6 +37,7 @@ export type Gasto = {
   fecha: string;
   categoria: string;
   importe: number;
+  concepto: string | null;
   observacion: string | null;
   debo: boolean;
   created_by: string | null;

@@ -20,10 +20,10 @@ export function DistribucionForm({ items }: { items: Distribucion[] }) {
   const totalOk = Math.round(total * 100) / 100 === 100;
 
   return (
-    <form action={formAction} className="flex flex-col gap-4 rounded-lg border border-slate-200 bg-white p-4">
+    <form action={formAction} className="flex flex-col gap-4 rounded-lg border border-gray-200 bg-white p-4">
       {items.map((item) => (
         <div key={item.id} className="flex items-center justify-between gap-4">
-          <label htmlFor={item.id} className="text-sm text-slate-700">
+          <label htmlFor={item.id} className="text-sm text-gray-700">
             {item.categoria}
           </label>
           <div className="flex items-center gap-1">
@@ -39,15 +39,15 @@ export function DistribucionForm({ items }: { items: Distribucion[] }) {
               onChange={(e) =>
                 setValores((prev) => ({ ...prev, [item.id]: Number(e.target.value) }))
               }
-              className="w-24 rounded-md border border-slate-300 px-3 py-1.5 text-right text-sm focus:border-slate-500 focus:outline-none"
+              className="w-24 rounded-md border border-gray-300 px-3 py-1.5 text-right text-sm focus:border-gray-500 focus:outline-none"
             />
-            <span className="text-sm text-slate-400">%</span>
+            <span className="text-sm text-gray-400">%</span>
           </div>
         </div>
       ))}
 
-      <div className="flex items-center justify-between border-t border-slate-200 pt-4">
-        <span className="text-sm font-medium text-slate-700">Total</span>
+      <div className="flex items-center justify-between border-t border-gray-200 pt-4">
+        <span className="text-sm font-medium text-gray-700">Total</span>
         <span className={`text-sm font-semibold ${totalOk ? "text-green-600" : "text-red-600"}`}>
           {total}%
         </span>
@@ -59,7 +59,7 @@ export function DistribucionForm({ items }: { items: Distribucion[] }) {
       <button
         type="submit"
         disabled={pending || !totalOk}
-        className="self-start rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800 disabled:opacity-50"
+        className="self-start rounded-md bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700 disabled:opacity-50"
       >
         {pending ? "Guardando..." : "Guardar"}
       </button>

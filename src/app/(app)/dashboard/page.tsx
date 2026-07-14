@@ -77,7 +77,7 @@ export default async function DashboardPage({
 
   return (
     <div className="flex flex-col gap-6">
-      <h1 className="text-lg font-semibold text-slate-900">Análisis</h1>
+      <h1 className="text-lg font-semibold text-gray-800">Análisis</h1>
 
       <DashboardFilters mes={mes} negocioId={negocioId} negocios={negocios ?? []} />
 
@@ -101,15 +101,15 @@ export default async function DashboardPage({
         />
       </div>
 
-      <div className="rounded-lg border border-slate-200 bg-white p-4">
-        <h2 className="mb-4 text-sm font-medium text-slate-700">Ingresos vs. gastos por categoría</h2>
+      <div className="rounded-lg border border-gray-200 bg-white p-4">
+        <h2 className="mb-4 text-sm font-medium text-gray-700">Ingresos vs. gastos por categoría</h2>
         <CategoriaChart data={chartData} />
       </div>
 
-      <div className="overflow-x-auto rounded-lg border border-slate-200 bg-white p-4">
+      <div className="overflow-x-auto rounded-lg border border-gray-200 bg-white p-4">
         <table className="w-full min-w-[480px] text-left text-sm">
           <thead>
-            <tr className="border-b border-slate-200 text-xs uppercase text-slate-400">
+            <tr className="border-b border-gray-200 text-xs uppercase text-gray-500">
               <th className="pb-2 font-medium">Categoría</th>
               <th className="pb-2 text-right font-medium">Ingresos</th>
               <th className="pb-2 text-right font-medium">Gastos</th>
@@ -118,13 +118,13 @@ export default async function DashboardPage({
           </thead>
           <tbody>
             {chartData.map((row) => (
-              <tr key={row.categoria} className="border-b border-slate-100">
+              <tr key={row.categoria} className="border-b border-gray-100">
                 <td className="py-2">{row.categoria}</td>
-                <td className="py-2 text-right">{formatEUR(row.ingresos)}</td>
-                <td className="py-2 text-right">{formatEUR(row.gastos)}</td>
+                <td className="py-2 text-right text-emerald-600">{formatEUR(row.ingresos)}</td>
+                <td className="py-2 text-right text-rose-600">{formatEUR(row.gastos)}</td>
                 <td
                   className={`py-2 text-right font-medium ${
-                    row.saldo < 0 ? "text-red-600" : "text-slate-900"
+                    row.saldo < 0 ? "text-rose-600" : "text-emerald-600"
                   }`}
                 >
                   {formatEUR(row.saldo)}

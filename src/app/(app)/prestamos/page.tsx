@@ -31,18 +31,18 @@ export default async function PrestamosPage({
 
   return (
     <div className="flex flex-col gap-6">
-      <h1 className="text-lg font-semibold text-slate-900">Préstamos a Socios</h1>
+      <h1 className="text-lg font-semibold text-gray-800">Préstamos a Socios</h1>
 
       <PrestamoForm socios={sociosActivos} />
 
       <MonthFilter mes={mes} />
 
-      <div className="flex flex-col gap-2 rounded-lg border border-slate-200 bg-white p-4">
+      <div className="flex flex-col gap-2 rounded-lg border border-gray-200 bg-white p-4">
         {prestamos?.map((prestamo) => (
           <PrestamoRow key={prestamo.id} prestamo={prestamo} socios={socios ?? []} />
         ))}
         {!prestamos?.length && (
-          <p className="py-4 text-center text-sm text-slate-400">
+          <p className="py-4 text-center text-sm text-gray-400">
             {mes ? "Sin préstamos en este mes." : "Sin préstamos todavía."}
           </p>
         )}

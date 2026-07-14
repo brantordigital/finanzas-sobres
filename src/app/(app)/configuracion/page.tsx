@@ -13,8 +13,8 @@ export default async function ConfiguracionPage() {
   return (
     <div className="flex max-w-md flex-col gap-6">
       <div>
-        <h1 className="text-lg font-semibold text-slate-900">Distribución por sobres</h1>
-        <p className="text-sm text-slate-500">
+        <h1 className="text-lg font-semibold text-gray-800">Distribución por sobres</h1>
+        <p className="text-sm text-gray-500">
           Porcentaje de cada ingreso que se reparte a cada categoría. Debe sumar 100%.
         </p>
       </div>

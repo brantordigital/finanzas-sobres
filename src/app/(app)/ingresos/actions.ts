@@ -8,6 +8,7 @@ const ingresoSchema = z.object({
   fecha: z.string().min(1),
   negocio_id: z.string().uuid(),
   importe: z.coerce.number().positive(),
+  concepto: z.string().trim().min(1),
   observaciones: z.string().trim().optional(),
 });
 
@@ -16,6 +17,7 @@ export async function crearIngreso(formData: FormData) {
     fecha: formData.get("fecha"),
     negocio_id: formData.get("negocio_id"),
     importe: formData.get("importe"),
+    concepto: formData.get("concepto"),
     observaciones: formData.get("observaciones") || undefined,
   });
 
@@ -39,6 +41,7 @@ export async function actualizarIngreso(id: string, formData: FormData) {
     fecha: formData.get("fecha"),
     negocio_id: formData.get("negocio_id"),
     importe: formData.get("importe"),
+    concepto: formData.get("concepto"),
     observaciones: formData.get("observaciones") || undefined,
   });
 

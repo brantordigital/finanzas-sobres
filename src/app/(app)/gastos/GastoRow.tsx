@@ -15,6 +15,7 @@ export function GastoRow({
   const [isPending, startTransition] = useTransition();
   const [editing, setEditing] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showNotas, setShowNotas] = useState(!!gasto.observacion);
 
   if (editing) {
     return (
@@ -30,26 +31,26 @@ export function GastoRow({
             }
           });
         }}
-        className="flex flex-col gap-3 rounded-md border border-slate-300 bg-slate-50 px-3 py-3 text-sm"
+        className="flex flex-col gap-3 rounded-md bg-gray-50 px-3 py-3 text-sm"
       >
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <div>
-            <label className="block text-xs font-medium text-slate-500">Fecha</label>
+            <label className="block text-xs font-medium text-gray-500">Fecha</label>
             <input
               name="fecha"
               type="date"
               required
               defaultValue={gasto.fecha}
-              className="mt-1 w-full rounded-md border border-slate-300 px-2 py-1.5 text-sm focus:border-slate-500 focus:outline-none"
+              className="mt-1 w-full rounded-md border border-gray-300 px-2 py-1.5 text-sm focus:border-emerald-500 focus:outline-none"
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-500">Categoría</label>
+            <label className="block text-xs font-medium text-gray-500">Categoría</label>
             <select
               name="categoria"
               required
               defaultValue={gasto.categoria}
-              className="mt-1 w-full rounded-md border border-slate-300 px-2 py-1.5 text-sm focus:border-slate-500 focus:outline-none"
+              className="mt-1 w-full rounded-md border border-gray-300 px-2 py-1.5 text-sm focus:border-emerald-500 focus:outline-none"
             >
               {distribucion.map((d) => (
                 <option key={d.id} value={d.categoria}>
@@ -61,7 +62,7 @@ export function GastoRow({
         </div>
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <div>
-            <label className="block text-xs font-medium text-slate-500">Importe</label>
+            <label className="block text-xs font-medium text-gray-500">Importe</label>
             <input
               name="importe"
               type="number"
@@ -69,20 +70,40 @@ export function GastoRow({
               min={0.01}
               required
               defaultValue={gasto.importe}
-              className="mt-1 w-full rounded-md border border-slate-300 px-2 py-1.5 text-sm focus:border-slate-500 focus:outline-none"
+              className="mt-1 w-full rounded-md border border-gray-300 px-2 py-1.5 text-sm focus:border-emerald-500 focus:outline-none"
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-500">Observación</label>
+            <label className="block text-xs font-medium text-gray-500">Concepto</label>
             <input
-              name="observacion"
-              defaultValue={gasto.observacion ?? ""}
-              className="mt-1 w-full rounded-md border border-slate-300 px-2 py-1.5 text-sm focus:border-slate-500 focus:outline-none"
+              name="concepto"
+              required
+              defaultValue={gasto.concepto ?? ""}
+              className="mt-1 w-full rounded-md border border-gray-300 px-2 py-1.5 text-sm focus:border-emerald-500 focus:outline-none"
             />
           </div>
         </div>
-        <label className="flex items-center gap-2 text-xs text-slate-600">
-          <input type="checkbox" name="debo" defaultChecked={gasto.debo} className="rounded border-slate-300" />
+        {!showNotas ? (
+          <button
+            type="button"
+            onClick={() => setShowNotas(true)}
+            className="self-start text-xs text-gray-500 hover:text-gray-700"
+          >
+            + Añadir notas
+          </button>
+        ) : (
+          <div>
+            <label className="block text-xs font-medium text-gray-500">Observaciones</label>
+            <textarea
+              name="observacion"
+              rows={2}
+              defaultValue={gasto.observacion ?? ""}
+              className="mt-1 w-full rounded-md border border-gray-300 px-2 py-1.5 text-sm focus:border-emerald-500 focus:outline-none"
+            />
+          </div>
+        )}
+        <label className="flex items-center gap-2 text-xs text-gray-600">
+          <input type="checkbox" name="debo" defaultChecked={gasto.debo} className="rounded border-gray-300" />
           Debo (gasto pendiente)
         </label>
         {error && <p className="text-xs text-red-600">{error}</p>}
@@ -90,14 +111,14 @@ export function GastoRow({
           <button
             type="submit"
             disabled={isPending}
-            className="rounded-md bg-slate-900 px-3 py-1.5 text-xs font-medium text-white hover:bg-slate-800 disabled:opacity-50"
+            className="rounded-md bg-emerald-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-emerald-700 disabled:opacity-50"
           >
             Guardar
           </button>
           <button
             type="button"
             onClick={() => setEditing(false)}
-            className="rounded-md px-3 py-1.5 text-xs text-slate-500 hover:bg-slate-100"
+            className="rounded-md bg-gray-100 px-3 py-1.5 text-xs text-gray-600 hover:bg-gray-200"
           >
             Cancelar
           </button>
@@ -107,30 +128,34 @@ export function GastoRow({
   }
 
   return (
-    <div className="flex flex-wrap items-center gap-x-4 gap-y-1 rounded-md border border-slate-100 px-3 py-2 text-sm">
-      <span className="shrink-0 text-slate-500">{formatDate(gasto.fecha)}</span>
-      <span className="w-full truncate text-slate-700 sm:w-auto sm:flex-1">{gasto.categoria}</span>
-      <span className="w-full shrink-0 truncate text-slate-500 sm:w-32">{gasto.observacion}</span>
+    <div className="flex flex-wrap items-center gap-x-4 gap-y-1 border-b border-gray-100 px-3 py-2 text-sm">
+      <span className="shrink-0 text-gray-500">{formatDate(gasto.fecha)}</span>
+      <span className="w-full truncate text-gray-700 sm:w-auto sm:flex-1">{gasto.categoria}</span>
+      <span className="w-full shrink-0 truncate text-gray-500 sm:w-32">{gasto.concepto}</span>
       <button
         type="button"
         disabled={isPending}
         onClick={() => startTransition(() => toggleGastoDebo(gasto.id, !gasto.debo))}
         className={`shrink-0 rounded-full px-2 py-0.5 text-xs font-medium ${
-          gasto.debo ? "bg-amber-100 text-amber-700" : "bg-slate-100 text-slate-400"
+          gasto.debo ? "bg-rose-100 text-rose-700" : "bg-emerald-100 text-emerald-700"
         }`}
       >
         {gasto.debo ? "Debo" : "Pagado"}
       </button>
-      <span className="shrink-0 text-right font-medium text-slate-900">
+      <span className="shrink-0 text-right font-medium text-rose-600">
         {formatEUR(gasto.importe)}
       </span>
       <button
         type="button"
         disabled={isPending}
         onClick={() => setEditing(true)}
-        className="shrink-0 text-slate-400 hover:text-slate-900 disabled:opacity-50"
+        className="shrink-0 text-gray-400 hover:text-gray-700 disabled:opacity-50"
+        aria-label="Editar"
       >
-        Editar
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} className="h-4 w-4">
+          <path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Z" />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 7.125 16.862 4.487" />
+        </svg>
       </button>
       <button
         type="button"
@@ -140,9 +165,12 @@ export function GastoRow({
             startTransition(() => eliminarGasto(gasto.id));
           }
         }}
-        className="shrink-0 text-slate-400 hover:text-red-600 disabled:opacity-50"
+        className="shrink-0 text-gray-400 hover:text-rose-600 disabled:opacity-50"
+        aria-label="Eliminar"
       >
-        Eliminar
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} className="h-4 w-4">
+          <path strokeLinecap="round" strokeLinejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+        </svg>
       </button>
     </div>
   );

@@ -2,7 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import type { Distribucion, Gasto } from "@/lib/types";
 import { monthRange } from "@/lib/format";
 import { MonthFilter } from "@/components/MonthFilter";
-import { GastoForm } from "./GastoForm";
+import { GastoFormToggle } from "./GastoFormToggle";
 import { GastoRow } from "./GastoRow";
 
 export default async function GastosPage({
@@ -26,18 +26,19 @@ export default async function GastosPage({
 
   return (
     <div className="flex flex-col gap-6">
-      <h1 className="text-lg font-semibold text-slate-900">Gastos</h1>
-
-      <GastoForm distribucion={distribucion ?? []} />
+      <div className="flex items-center justify-between">
+        <h1 className="text-lg font-semibold text-gray-800">Gastos</h1>
+        <GastoFormToggle distribucion={distribucion ?? []} />
+      </div>
 
       <MonthFilter mes={mes} />
 
-      <div className="flex flex-col gap-2 rounded-lg border border-slate-200 bg-white p-4">
+      <div className="flex flex-col rounded-lg border border-gray-200 bg-white">
         {gastos?.map((gasto) => (
           <GastoRow key={gasto.id} gasto={gasto} distribucion={distribucion ?? []} />
         ))}
         {!gastos?.length && (
-          <p className="py-4 text-center text-sm text-slate-400">
+          <p className="py-4 text-center text-sm text-gray-400">
             {mes ? "Sin gastos en este mes." : "Sin gastos todavía."}
           </p>
         )}

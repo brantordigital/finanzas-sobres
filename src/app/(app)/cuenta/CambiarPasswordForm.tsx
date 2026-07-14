@@ -10,9 +10,9 @@ export function CambiarPasswordForm() {
   >(cambiarPassword, { error: null, success: false });
 
   return (
-    <form action={formAction} className="flex flex-col gap-4 rounded-lg border border-slate-200 bg-white p-4">
+    <form action={formAction} className="flex flex-col gap-4 rounded-lg border border-gray-200 bg-white p-4">
       <div>
-        <label htmlFor="password" className="block text-sm font-medium text-slate-700">
+        <label htmlFor="password" className="block text-sm font-medium text-gray-700">
           Nueva contraseña
         </label>
         <input
@@ -22,11 +22,11 @@ export function CambiarPasswordForm() {
           required
           minLength={8}
           autoComplete="new-password"
-          className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-slate-500 focus:outline-none"
+          className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-gray-500 focus:outline-none"
         />
       </div>
       <div>
-        <label htmlFor="confirmacion" className="block text-sm font-medium text-slate-700">
+        <label htmlFor="confirmacion" className="block text-sm font-medium text-gray-700">
           Confirmar contraseña
         </label>
         <input
@@ -36,7 +36,7 @@ export function CambiarPasswordForm() {
           required
           minLength={8}
           autoComplete="new-password"
-          className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-slate-500 focus:outline-none"
+          className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-gray-500 focus:outline-none"
         />
       </div>
       {state.error && <p className="text-sm text-red-600">{state.error}</p>}
@@ -44,7 +44,7 @@ export function CambiarPasswordForm() {
       <button
         type="submit"
         disabled={pending}
-        className="self-start rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800 disabled:opacity-50"
+        className="self-start rounded-md bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700 disabled:opacity-50"
       >
         {pending ? "Guardando..." : "Cambiar contraseña"}
       </button>

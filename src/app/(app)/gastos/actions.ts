@@ -8,6 +8,7 @@ const gastoSchema = z.object({
   fecha: z.string().min(1),
   categoria: z.string().min(1),
   importe: z.coerce.number().positive(),
+  concepto: z.string().trim().min(1),
   observacion: z.string().trim().optional(),
   debo: z.coerce.boolean().optional(),
 });
@@ -17,6 +18,7 @@ export async function crearGasto(formData: FormData) {
     fecha: formData.get("fecha"),
     categoria: formData.get("categoria"),
     importe: formData.get("importe"),
+    concepto: formData.get("concepto"),
     observacion: formData.get("observacion") || undefined,
     debo: formData.get("debo") === "on",
   });
@@ -42,6 +44,7 @@ export async function actualizarGasto(id: string, formData: FormData) {
     fecha: formData.get("fecha"),
     categoria: formData.get("categoria"),
     importe: formData.get("importe"),
+    concepto: formData.get("concepto"),
     observacion: formData.get("observacion") || undefined,
     debo: formData.get("debo") === "on",
   });

@@ -10,9 +10,9 @@ export function DashboardFilters({
   negocios: Negocio[];
 }) {
   return (
-    <form method="get" className="flex flex-wrap items-end gap-4 rounded-lg border border-slate-200 bg-white p-4">
+    <form method="get" className="flex flex-wrap items-end gap-4">
       <div>
-        <label htmlFor="mes" className="block text-sm font-medium text-slate-700">
+        <label htmlFor="mes" className="block text-sm font-medium text-gray-700">
           Mes
         </label>
         <input
@@ -20,18 +20,18 @@ export function DashboardFilters({
           name="mes"
           type="month"
           defaultValue={mes}
-          className="mt-1 rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-slate-500 focus:outline-none"
+          className="mt-1 rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-emerald-500 focus:outline-none"
         />
       </div>
       <div>
-        <label htmlFor="negocio" className="block text-sm font-medium text-slate-700">
+        <label htmlFor="negocio" className="block text-sm font-medium text-gray-700">
           Negocio (solo ingresos)
         </label>
         <select
           id="negocio"
           name="negocio"
           defaultValue={negocioId}
-          className="mt-1 rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-slate-500 focus:outline-none"
+          className="mt-1 rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-emerald-500 focus:outline-none"
         >
           <option value="">Todos</option>
           {negocios.map((n) => (
@@ -43,7 +43,7 @@ export function DashboardFilters({
       </div>
       <button
         type="submit"
-        className="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800"
+        className="rounded-md bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700"
       >
         Filtrar
       </button>

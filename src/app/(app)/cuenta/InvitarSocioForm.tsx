@@ -10,16 +10,16 @@ export function InvitarSocioForm() {
   >(crearAccesoSocio, { error: null, email: null, password: null });
 
   return (
-    <div className="flex flex-col gap-4 rounded-lg border border-slate-200 bg-white p-4">
+    <div className="flex flex-col gap-4 rounded-lg border border-gray-200 bg-white p-4">
       <div>
-        <h2 className="text-sm font-semibold text-slate-900">Dar acceso a un socio</h2>
-        <p className="text-sm text-slate-500">
+        <h2 className="text-sm font-semibold text-gray-800">Dar acceso a un socio</h2>
+        <p className="text-sm text-gray-500">
           Crea la cuenta directamente con una contraseña temporal — no se envía ningún email.
         </p>
       </div>
       <form action={formAction} className="flex flex-wrap items-end gap-2">
         <div className="flex-1">
-          <label htmlFor="socio-email" className="block text-sm font-medium text-slate-700">
+          <label htmlFor="socio-email" className="block text-sm font-medium text-gray-700">
             Email
           </label>
           <input
@@ -27,13 +27,13 @@ export function InvitarSocioForm() {
             name="email"
             type="email"
             required
-            className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-slate-500 focus:outline-none"
+            className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-gray-500 focus:outline-none"
           />
         </div>
         <button
           type="submit"
           disabled={pending}
-          className="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800 disabled:opacity-50"
+          className="rounded-md bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700 disabled:opacity-50"
         >
           {pending ? "Creando..." : "Crear acceso"}
         </button>
